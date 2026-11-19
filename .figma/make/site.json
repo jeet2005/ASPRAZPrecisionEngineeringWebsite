@@ -1,0 +1,10 @@
+{
+  "description": "Explore ASPRAZ Engineering’s CNC and VMC machining capabilities, process, and component gallery, then submit project requirements through an interactive showcase for manufacturing buyers.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
