@@ -1698,6 +1698,315 @@ section.in-view h2 {
   display: none;
 }
 
+.model-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  overflow: hidden;
+  background: #d7d9da;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+  isolation: isolate;
+}
+.model-frame::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+.model-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  pointer-events: none;
+}
+.model-frame.is-active iframe {
+  pointer-events: auto;
+}
+.model-activate {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  background: radial-gradient(circle, transparent 25%, rgba(5, 24, 60, 0.14) 100%);
+}
+.model-activate span {
+  padding: 10px 14px;
+  background: var(--orange);
+  color: white;
+  font: 700 8px "Manrope";
+  letter-spacing: 0.16em;
+}
+.model-activate i {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: white;
+  font-style: normal;
+}
+.model-meta {
+  position: absolute;
+  z-index: 5;
+  left: 13px;
+  right: 13px;
+  bottom: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  background: rgba(5, 24, 60, 0.88);
+  backdrop-filter: blur(9px);
+  pointer-events: none;
+}
+.model-meta span {
+  font: 700 8px "Manrope";
+  letter-spacing: 0.14em;
+}
+.model-meta small {
+  font: 600 6px "Manrope";
+  letter-spacing: 0.1em;
+  color: #9cabbe;
+  text-align: right;
+}
+.model-frame-featured {
+  min-height: 100%;
+  clip-path: polygon(8% 0, 100% 0, 100% 88%, 89% 100%, 0 100%, 0 13%);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+}
+.model-frame-featured::after {
+  content: "LIVE MODEL / VMC";
+  position: absolute;
+  z-index: 6;
+  right: 13px;
+  top: 12px;
+  padding: 8px 10px;
+  background: var(--blue);
+  color: white;
+  font: 700 7px "Manrope";
+  letter-spacing: 0.15em;
+  pointer-events: none;
+}
+.hero-object {
+  height: min(43vw, 670px);
+  transform: rotate(-2deg);
+}
+.hero-object .model-frame {
+  box-shadow: 35px 45px 80px rgba(0, 0, 0, 0.42);
+}
+.company-facts {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(7, 16, 31, 0.25);
+  display: grid;
+  gap: 13px;
+}
+.company-facts div {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 12px;
+}
+.company-facts small {
+  font: 700 7px "Manrope";
+  letter-spacing: 0.16em;
+  color: #727985;
+}
+.company-facts b {
+  font: 700 9px/1.5 "Manrope";
+  letter-spacing: 0.1em;
+}
+.about-shape {
+  transform: rotate(-4deg);
+  height: 360px;
+  width: 34vw;
+}
+.about-shape .model-frame {
+  background: #d7d9da;
+  border: 7px solid var(--paper-bright);
+  box-shadow: 18px 23px 0 var(--blue);
+}
+.play-stage {
+  cursor: default;
+}
+.play-models {
+  position: absolute;
+  inset: 36% 5vw 10%;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 24px;
+}
+.play-models .model-frame:last-child {
+  transform: translateY(65px);
+}
+.play-disclaimer {
+  position: absolute;
+  z-index: 5;
+  right: 5vw;
+  bottom: 2.5%;
+  max-width: 470px;
+  font: 600 7px/1.5 "Manrope";
+  letter-spacing: 0.11em;
+  color: #7f90aa;
+  text-transform: uppercase;
+}
+.process-mark-system {
+  position: relative;
+  width: min(64%, 460px);
+  aspect-ratio: 1.7;
+  display: grid;
+  place-items: center;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.process-mark {
+  position: absolute;
+  width: 86%;
+  aspect-ratio: 997 / 479;
+  -webkit-mask: url("/aspraz-symbol.svg") center / contain no-repeat;
+  mask: url("/aspraz-symbol.svg") center / contain no-repeat;
+  background: var(--navy);
+  transition:
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.5s,
+    background 0.5s,
+    clip-path 0.7s;
+}
+.mark-main {
+  z-index: 3;
+}
+.mark-echo {
+  opacity: 0;
+  z-index: 1;
+}
+.mark-axis {
+  position: absolute;
+  z-index: 5;
+  font: 700 7px "Manrope";
+  letter-spacing: 0.14em;
+  color: var(--blue);
+}
+.mark-axis-x {
+  top: -8px;
+  left: 7%;
+}
+.mark-axis-y {
+  right: -4px;
+  bottom: 8%;
+  writing-mode: vertical-rl;
+}
+.mark-registration {
+  position: absolute;
+  inset: -18px 0;
+  pointer-events: none;
+}
+.mark-registration i {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-color: var(--blue);
+}
+.mark-registration i:nth-child(1) {
+  left: 0;
+  top: 0;
+  border-left: 1px solid;
+  border-top: 1px solid;
+}
+.mark-registration i:nth-child(2) {
+  right: 0;
+  top: 0;
+  border-right: 1px solid;
+  border-top: 1px solid;
+}
+.mark-registration i:nth-child(3) {
+  left: 0;
+  bottom: 0;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+}
+.mark-registration i:nth-child(4) {
+  right: 0;
+  bottom: 0;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+.mark-state {
+  position: absolute;
+  left: 7%;
+  bottom: -30px;
+  font: 700 8px "Manrope";
+  letter-spacing: 0.16em;
+  color: var(--navy);
+}
+.mark-scan {
+  position: absolute;
+  z-index: 6;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  top: 10%;
+  opacity: 0;
+  background: var(--orange);
+  box-shadow: 0 0 13px var(--orange);
+}
+.mark-stage-0 .mark-main {
+  opacity: 0.18;
+  background: repeating-linear-gradient(90deg, var(--blue) 0 2px, transparent 2px 7px);
+}
+.mark-stage-1 {
+  transform: rotate(-3deg);
+}
+.mark-stage-1 .mark-main {
+  background: repeating-linear-gradient(135deg, var(--blue) 0 4px, transparent 4px 10px);
+}
+.mark-stage-1 .echo-one {
+  opacity: 0.22;
+  background: var(--orange);
+  transform: translate(14px, -12px);
+}
+.mark-stage-2 .mark-main {
+  background: linear-gradient(105deg, #172a50 0 25%, #aeb6bd 45%, #f4f1e9 55%, #34435d 78%);
+}
+.mark-stage-2 .echo-one,
+.mark-stage-2 .echo-two {
+  opacity: 0.18;
+  background: var(--blue);
+}
+.mark-stage-2 .echo-one {
+  transform: translate(-18px, 13px);
+}
+.mark-stage-2 .echo-two {
+  transform: translate(18px, -13px);
+}
+.mark-stage-3 .mark-scan {
+  opacity: 1;
+  animation: logoScan 1.8s ease-in-out infinite;
+}
+.mark-stage-3 .mark-main {
+  background: var(--navy);
+}
+.mark-stage-4 .mark-main {
+  background: var(--blue);
+  transform: scale(1.05);
+}
+.mark-stage-4 .mark-registration {
+  border: 1px solid rgba(28, 98, 255, 0.25);
+}
+@keyframes logoScan {
+  50% {
+    top: 88%;
+  }
+}
+
 @media (max-width: 980px) {
   .nav {
     height: 74px;
@@ -2185,5 +2494,57 @@ section.in-view h2 {
   }
   .hero-object {
     transform: none !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .about {
+    min-height: 1100px;
+  }
+  .about-copy {
+    margin-top: 295px;
+  }
+  .hero-object {
+    width: 92vw;
+    height: 54vw;
+    left: 6%;
+    top: 35%;
+  }
+  .model-frame-featured .model-meta small {
+    display: none;
+  }
+  .company-facts {
+    margin-top: 20px;
+  }
+  .company-facts div {
+    grid-template-columns: 65px 1fr;
+  }
+  .about-shape {
+    width: 78vw;
+    height: 245px;
+    left: -5%;
+    bottom: 260px;
+  }
+  .play-models {
+    inset: 31% 20px 11%;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .play-models .model-frame {
+    min-height: 205px;
+  }
+  .play-models .model-frame:last-child {
+    transform: none;
+  }
+  .play-disclaimer {
+    left: 20px;
+    right: 20px;
+    bottom: 2%;
+  }
+  .process-mark-system {
+    width: 72%;
+  }
+  .model-meta small {
+    max-width: 44%;
   }
 }

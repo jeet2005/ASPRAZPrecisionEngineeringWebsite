@@ -114,18 +114,89 @@ function MagneticButton({
   );
 }
 
+function SketchfabModel({
+  id,
+  title,
+  credit,
+  featured = false,
+}: {
+  id: string;
+  title: string;
+  credit: string;
+  featured?: boolean;
+}) {
+  const [active, setActive] = useState(false);
+  return (
+    <div
+      className={`model-frame ${featured ? "model-frame-featured" : ""} ${active ? "is-active" : ""}`}
+    >
+      <iframe
+        title={title}
+        src={`https://sketchfab.com/models/${id}/embed?autostart=1&ui_infos=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&dnt=1`}
+        allow="autoplay; fullscreen; xr-spatial-tracking"
+        loading={featured ? "eager" : "lazy"}
+      />
+      {!active && (
+        <button className="model-activate" onClick={() => setActive(true)}>
+          <span>EXPLORE 3D</span>
+          <i>↗</i>
+        </button>
+      )}
+      <div className="model-meta">
+        <span>{title}</span>
+        <small>{credit} / EXTERNAL 3D STUDY</small>
+      </div>
+    </div>
+  );
+}
+
+function ProcessMark({ stage }: { stage: number }) {
+  return (
+    <div className={`process-mark-system mark-stage-${stage}`}>
+      <span className="mark-axis mark-axis-x">X / 000</span>
+      <span className="mark-axis mark-axis-y">Y / 000</span>
+      <div className="process-mark mark-echo echo-one" aria-hidden="true" />
+      <div className="process-mark mark-echo echo-two" aria-hidden="true" />
+      <div className="process-mark mark-main" role="img" aria-label="ASPRAZ symbol" />
+      <div className="mark-scan" />
+      <div className="mark-registration">
+        <i />
+        <i />
+        <i />
+        <i />
+      </div>
+      <small className="mark-state">
+        {
+          [
+            "INPUT GEOMETRY",
+            "PATH PREPARATION",
+            "MACHINING FORM",
+            "VERIFY PROFILE",
+            "FINAL OUTPUT",
+          ][stage]
+        }
+      </small>
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section className="hero" id="home">
       <div className="hero-grid" />
-      <div className="hero-kicker reveal">PRECISION MACHINING / AHMEDABAD, INDIA</div>
+      <div className="hero-kicker reveal">PRECISION MACHINING / RAJKOT, GUJARAT</div>
       <div className="hero-title">
         <span className="reveal">WE MAKE</span>
         <span className="outline reveal">PRECISION</span>
         <span className="indent reveal">MOVE.</span>
       </div>
       <div className="hero-object">
-        <div className="blank-visual" aria-hidden="true" />
+        <SketchfabModel
+          id="d11b572b74bd4d148ac8980294d9a2fa"
+          title="VERTICAL MACHINING CENTER"
+          credit="3D MODEL BY STRATEGICSALE.FOUR"
+          featured
+        />
       </div>
       <div className="hero-sidecopy">
         <p>
@@ -146,10 +217,6 @@ function Hero() {
           </a>
         </div>
       </div>
-      <div className="hero-label label-a">CNC / 01</div>
-      <div className="hero-label label-b">VMC / 02</div>
-      <div className="hero-label label-c">PRECISION / 03</div>
-      <div className="hero-label label-d">ENGINEERING / 04</div>
       <a className="scroll-cue" href="#about">
         <span>SCROLL TO MOVE</span>
         <i />
@@ -230,8 +297,24 @@ function About() {
           <span>DRAWING TO COMPONENT</span>
           <b>±</b>
         </div>
+        <div className="company-facts">
+          <div>
+            <small>BASED IN</small>
+            <b>RAJKOT, GUJARAT</b>
+          </div>
+          <div>
+            <small>PARTNERS</small>
+            <b>ARTH BHALALA · HIT BHALALA · RISHI BHALALA</b>
+          </div>
+        </div>
       </div>
-      <div className="about-shape blank-visual" aria-hidden="true" />
+      <div className="about-shape">
+        <SketchfabModel
+          id="b7bb5f7f607f431ba16806da40f42421"
+          title="MACHINED PART / 3D SCAN"
+          credit="GOMEASURE3D · CC BY"
+        />
+      </div>
       <div className="marquee" aria-hidden="true">
         <div>
           REQUIREMENT — PREPARATION — MACHINING — CHECK — DELIVERY — REQUIREMENT — PREPARATION —
@@ -302,7 +385,24 @@ function Playground() {
           <span>SPACE.</span>
         </h2>
       </div>
-      <div className="play-stage blank-visual" aria-hidden="true" />
+      <div className="play-stage">
+        <div className="play-models">
+          <SketchfabModel
+            id="e08b557b9f4543a3bba2faeb8572be72"
+            title="CNC MACHINE SYSTEM"
+            credit="LUTZ WESTERFELD · CC BY"
+          />
+          <SketchfabModel
+            id="0c415c66f6dd44929d7853deca72ace8"
+            title="CNC MACHINED IRON PART"
+            credit="SHINING 3D · CC BY"
+          />
+        </div>
+        <p className="play-disclaimer">
+          Interactive external 3D studies. Shown for visual context only; not ASPRAZ equipment or
+          production work.
+        </p>
+      </div>
     </section>
   );
 }
@@ -324,7 +424,7 @@ function Process() {
       </div>
       <div className="process-body">
         <div className="process-object">
-          <img className="process-logo" src="/aspraz-symbol.svg" alt="ASPRAZ Engineering" />
+          <ProcessMark stage={active} />
           <div className="process-counter">
             0{active + 1}
             <small>/ 05</small>
@@ -523,6 +623,7 @@ function Contact() {
         <div>
           <span>CONTACT</span>
           <a href="mailto:info@aspraz.com">info@aspraz.com</a>
+          <small>Rajkot, Gujarat, India</small>
           <small>Contact details are editable placeholders.</small>
         </div>
         <a className="back-top" href="#home">
