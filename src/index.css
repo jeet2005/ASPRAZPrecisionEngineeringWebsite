@@ -223,9 +223,9 @@ button {
 .hero-title {
   position: relative;
   z-index: 5;
-  width: fit-content;
-  max-width: calc(100% - 12px);
-  padding-right: 12px;
+  width: min(100%, 760px);
+  max-width: calc(100vw - 5vw - 16px);
+  padding-right: 18px;
   margin-top: 3vh;
   display: flex;
   flex-direction: column;
@@ -768,7 +768,7 @@ section {
   margin-top: 85px;
   display: grid;
   grid-template-columns: 47% 53%;
-  min-height: 600px;
+  min-height: 515px;
   border-top: 1px solid var(--line);
 }
 .cap-list button {
@@ -826,8 +826,9 @@ section {
 }
 .cap-stage {
   position: relative;
-  background: #e9e5dc;
-  color: var(--ink);
+  min-height: 515px;
+  background: #1a1c1f;
+  color: white;
   overflow: hidden;
   animation: stageIn 0.5s ease both;
 }
@@ -838,10 +839,64 @@ section {
   }
 }
 .cap-visual {
-  height: 72%;
+  height: 100%;
+  min-height: inherit;
   position: relative;
-  background: radial-gradient(circle, #f8f5ed, #c9c8c2);
+  overflow: hidden;
+  background: #1a1c1f;
   perspective: 800px;
+}
+.cap-visual::before,
+.cap-visual::after {
+  z-index: 1;
+  pointer-events: none;
+}
+.capability-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) contrast(1.04);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.capability-photo-caption {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 150px;
+  padding: 70px 8% 28px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  color: white;
+  background: linear-gradient(0deg, rgba(8, 10, 12, 0.88), transparent);
+}
+.capability-photo-caption span {
+  flex: 0 0 auto;
+  font: 700 9px "Manrope";
+  letter-spacing: 0.15em;
+}
+.capability-photo-caption p {
+  max-width: 340px;
+  margin: 0;
+  font: 500 14px/1.6 "Space Grotesk";
+}
+.cap-stage:hover .capability-photo {
+  transform: scale(1.045);
+}
+.capability-photo-index {
+  position: absolute;
+  z-index: 3;
+  top: 22px;
+  right: 24px;
+  padding: 8px 10px;
+  color: white;
+  background: rgba(16, 18, 20, 0.68);
+  font: 700 9px "Manrope";
+  letter-spacing: 0.12em;
 }
 .cap-visual:before {
   content: "";
@@ -2244,18 +2299,21 @@ section.in-view h2 {
     font-size: 25px;
   }
   .cap-stage {
-    height: 550px;
+    height: 515px;
+    min-height: 0;
   }
   .cap-visual {
-    height: 68%;
+    height: 100%;
+    min-height: 0;
   }
-  .cap-info {
-    height: 32%;
-    grid-template-columns: 1fr;
-    padding: 22px;
+  .capability-photo-caption {
+    min-height: 170px;
+    padding: 70px 22px 22px;
+    display: block;
   }
-  .cap-info p {
+  .capability-photo-caption p {
     font-size: 12px;
+    margin-top: 10px;
   }
   .playground {
     height: 850px;
@@ -2263,42 +2321,6 @@ section.in-view h2 {
   }
   .play-head h2 {
     margin-top: 40px;
-  }
-  .play-stage {
-    transform: none;
-  }
-  .drag-object {
-    width: 90vw;
-    height: 90vw;
-    left: 9%;
-    top: 29%;
-  }
-  .part-one {
-    left: 4%;
-    top: 55%;
-    width: 65px;
-  }
-  .part-two {
-    right: 3%;
-    top: 35%;
-    width: 55px;
-  }
-  .part-three {
-    display: none;
-  }
-  .drag-note {
-    left: 20px;
-    bottom: 185px;
-  }
-  .drag-note span {
-    width: 45px;
-    height: 45px;
-  }
-  .object-readout {
-    left: 20px;
-    right: 20px;
-    bottom: 45px;
-    width: auto;
   }
   .process {
     padding-top: 80px;
@@ -2437,6 +2459,204 @@ section.in-view h2 {
   }
 }
 
+/* Mr. ASPRAZ chat: carry the same navy, orange and workshop typography into the site assistant. */
+.axis-chat-dock {
+  position: fixed;
+  z-index: 150;
+  right: clamp(16px, 3vw, 54px);
+  bottom: clamp(16px, 3vw, 34px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  font-family: "Manrope", sans-serif;
+  color: var(--paper);
+}
+.axis-chat-panel {
+  width: min(410px, calc(100vw - 32px));
+  max-height: min(680px, calc(100dvh - 112px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(238, 233, 223, .2);
+  border-top: 3px solid var(--orange);
+  border-radius: 8px;
+  background: var(--ink);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, .42);
+}
+.axis-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 18px 18px 16px;
+  border-bottom: 1px solid rgba(238, 233, 223, .14);
+  background: var(--navy);
+}
+.axis-chat-mark,
+.axis-chat-launcher-mark {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.axis-chat-mark img,
+.axis-chat-launcher-mark img { width: 25px; height: 25px; object-fit: contain; }
+.axis-chat-heading { min-width: 0; flex: 1; }
+.axis-chat-heading p,
+.axis-chat-message > p {
+  margin: 0 0 3px;
+  color: var(--orange);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+.axis-chat-heading h2 {
+  margin: 0;
+  color: var(--paper);
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: .015em;
+}
+.axis-chat-heading h2 em { color: var(--orange); font-style: normal; }
+.axis-chat-heading small { display: block; margin-top: 5px; color: rgba(238, 233, 223, .68); font-size: 10px; }
+.axis-chat-close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(238, 233, 223, .24);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--paper);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.axis-chat-close:hover { border-color: var(--orange); color: var(--orange); }
+.axis-chat-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 17px;
+  border-bottom: 1px solid rgba(238, 233, 223, .1);
+  color: rgba(238, 233, 223, .58);
+  font-size: 9px;
+  line-height: 1.5;
+}
+.axis-chat-notice:first-letter { color: var(--orange); }
+.axis-chat-notice i { flex: 0 0 auto; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
+.axis-chat-conversation {
+  min-height: 110px;
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 17px;
+  scrollbar-color: rgba(255, 91, 39, .6) var(--graphite);
+}
+.axis-chat-message {
+  max-width: 91%;
+  padding: 11px 13px;
+  border: 1px solid rgba(238, 233, 223, .13);
+  border-radius: 4px;
+  color: rgba(238, 233, 223, .92);
+  font-size: 12px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+.axis-chat-message.from-axis { align-self: flex-start; background: var(--graphite); }
+.axis-chat-message.from-user { align-self: flex-end; border-color: rgba(255, 91, 39, .52); background: #10254b; }
+.axis-chat-compose { padding: 13px 15px 15px; border-top: 1px solid rgba(238, 233, 223, .15); background: #0a1221; }
+.axis-chat-prompts { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 11px; }
+.axis-chat-prompts button {
+  padding: 6px 8px;
+  border: 1px solid rgba(238, 233, 223, .2);
+  border-radius: 3px;
+  background: transparent;
+  color: rgba(238, 233, 223, .8);
+  font: 600 9px "Manrope", sans-serif;
+  cursor: pointer;
+}
+.axis-chat-prompts button:hover { border-color: var(--orange); color: var(--orange); }
+.axis-chat-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+  padding: 11px 13px;
+  border: 1px solid var(--orange);
+  border-radius: 3px;
+  background: var(--orange);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-decoration: none;
+}
+.axis-chat-cta:hover { background: transparent; color: var(--orange); }
+.axis-chat-form { display: flex; gap: 7px; }
+.axis-chat-form input {
+  width: 0;
+  min-width: 0;
+  flex: 1;
+  padding: 10px 11px;
+  border: 1px solid rgba(238, 233, 223, .2);
+  border-radius: 3px;
+  outline: none;
+  background: var(--graphite);
+  color: var(--paper);
+  font: 11px "Manrope", sans-serif;
+}
+.axis-chat-form input::placeholder { color: rgba(238, 233, 223, .45); }
+.axis-chat-form input:focus { border-color: var(--orange); }
+.axis-chat-form button {
+  padding: 0 12px;
+  border: 1px solid var(--orange);
+  border-radius: 3px;
+  background: var(--orange);
+  color: var(--ink);
+  font: 800 9px "Manrope", sans-serif;
+  letter-spacing: .06em;
+  cursor: pointer;
+}
+.axis-chat-form button:disabled { opacity: .45; cursor: default; }
+.axis-chat-launcher {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 62px;
+  padding: 8px 15px 8px 9px;
+  border: 1px solid rgba(238, 233, 223, .35);
+  border-radius: 5px;
+  background: var(--navy);
+  color: var(--paper);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .25);
+  cursor: pointer;
+  text-align: left;
+}
+.axis-chat-launcher:hover { border-color: var(--orange); }
+.axis-chat-launcher-mark { width: 42px; height: 42px; }
+.axis-chat-launcher-copy { display: grid; gap: 2px; }
+.axis-chat-launcher-copy b { font: 700 14px "Barlow Condensed", sans-serif; letter-spacing: .07em; }
+.axis-chat-launcher-copy small { color: rgba(238, 233, 223, .7); font-size: 9px; letter-spacing: .08em; }
+.axis-chat-launcher-toggle { margin-left: 5px; color: var(--orange); font-size: 22px; line-height: 1; }
+.axis-chat-dock button:focus-visible,
+.axis-chat-dock a:focus-visible,
+.axis-chat-dock input:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+@media (max-width: 680px) {
+  .axis-chat-dock { right: 12px; bottom: 12px; }
+  .axis-chat-panel { width: calc(100vw - 24px); max-height: calc(100dvh - 92px); }
+  .axis-chat-launcher { min-height: 56px; }
+  .axis-chat-launcher-mark { width: 38px; height: 38px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto !important;
@@ -2500,4 +2720,130 @@ section.in-view h2 {
   .model-meta small {
     max-width: 44%;
   }
+}
+
+/* Softer, more minimal chat finish while retaining ASPRAZ colors. */
+.axis-chat-dock {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Manrope", sans-serif;
+}
+.axis-chat-panel {
+  border: 1px solid rgba(5, 24, 60, .12);
+  border-top: 2px solid var(--orange);
+  border-radius: 20px;
+  background: rgba(250, 249, 246, .94);
+  color: var(--ink);
+  box-shadow: 0 18px 60px rgba(5, 24, 60, .2);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(145%);
+}
+.axis-chat-header {
+  gap: 12px;
+  padding: 19px 18px 16px;
+  border-color: rgba(5, 24, 60, .08);
+  background: rgba(255, 255, 255, .68);
+}
+.axis-chat-mark,
+.axis-chat-launcher-mark { width: 40px; height: 40px; }
+.axis-chat-mark img,
+.axis-chat-launcher-mark img { width: 23px; height: 23px; }
+.axis-chat-heading p,
+.axis-chat-message > p { font-size: 9px; letter-spacing: .11em; }
+.axis-chat-heading h2 {
+  color: var(--navy);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Manrope", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.035em;
+  line-height: 1.15;
+}
+.axis-chat-heading h2 em { color: var(--orange); }
+.axis-chat-heading small { color: rgba(7, 16, 31, .58); font-size: 11px; }
+.axis-chat-close {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(5, 24, 60, .06);
+  color: rgba(5, 24, 60, .68);
+  font-size: 20px;
+  transition: background .18s ease, color .18s ease;
+}
+.axis-chat-close:hover { border-color: transparent; background: rgba(255, 91, 39, .13); color: var(--navy); }
+.axis-chat-notice {
+  padding: 9px 18px;
+  border-color: rgba(5, 24, 60, .07);
+  color: rgba(7, 16, 31, .55);
+  font-size: 10px;
+}
+.axis-chat-conversation { padding: 18px; scrollbar-color: rgba(5, 24, 60, .2) transparent; }
+.axis-chat-message {
+  padding: 12px 14px;
+  border: 1px solid rgba(5, 24, 60, .07);
+  border-radius: 16px;
+  color: rgba(7, 16, 31, .86);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.axis-chat-message.from-axis { border-bottom-left-radius: 6px; background: rgba(255, 255, 255, .9); }
+.axis-chat-message.from-user {
+  border-color: rgba(5, 24, 60, .08);
+  border-bottom-right-radius: 6px;
+  background: #e9edf5;
+}
+.axis-chat-compose {
+  padding: 13px 16px 16px;
+  border-color: rgba(5, 24, 60, .08);
+  background: rgba(255, 255, 255, .62);
+}
+.axis-chat-prompts button {
+  padding: 7px 10px;
+  border-color: rgba(5, 24, 60, .13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .76);
+  color: rgba(5, 24, 60, .74);
+  font: 500 10px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Manrope", sans-serif;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+.axis-chat-prompts button:hover { border-color: rgba(255, 91, 39, .55); background: rgba(255, 91, 39, .08); color: var(--navy); }
+.axis-chat-cta {
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 11px;
+  letter-spacing: .06em;
+  transition: background .18s ease, color .18s ease;
+}
+.axis-chat-form { gap: 8px; }
+.axis-chat-form input {
+  padding: 12px 14px;
+  border-color: rgba(5, 24, 60, .1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  color: var(--ink);
+  font: 12px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Manrope", sans-serif;
+}
+.axis-chat-form input::placeholder { color: rgba(7, 16, 31, .4); }
+.axis-chat-form button {
+  min-width: 58px;
+  border-radius: 999px;
+  font: 700 10px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Manrope", sans-serif;
+}
+.axis-chat-launcher {
+  min-height: 58px;
+  padding: 8px 14px 8px 8px;
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 999px;
+  background: rgba(5, 24, 60, .9);
+  box-shadow: 0 8px 30px rgba(5, 24, 60, .2);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.axis-chat-launcher:hover { border-color: rgba(255, 91, 39, .8); transform: translateY(-1px); }
+.axis-chat-launcher-mark { width: 40px; height: 40px; }
+.axis-chat-launcher-copy b { font: 650 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Manrope", sans-serif; letter-spacing: .01em; }
+.axis-chat-launcher-copy small { font-size: 9px; letter-spacing: .04em; }
+.axis-chat-launcher-toggle { font-size: 20px; }
+@media (max-width: 680px) {
+  .axis-chat-panel { border-radius: 18px; }
+  .axis-chat-launcher { min-height: 54px; }
 }

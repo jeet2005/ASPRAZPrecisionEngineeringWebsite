@@ -46,6 +46,14 @@ const capabilities = [
   ],
 ];
 
+const capabilityImages = [
+  "/capability-cnc.jpg",
+  "/capability-vmc.jpg",
+  "/capability-milling.jpg",
+  "/capability-drilling.jpg",
+  "/capability-jobwork.jpg",
+];
+
 const processSteps = [
   ["01", "REQUIREMENT", "Understanding the component, drawing and customer requirements."],
   ["02", "PREPARATION", "Machining preparation and practical process planning."],
@@ -269,10 +277,17 @@ function Capabilities() {
           ))}
         </div>
         <div className="cap-stage" key={active}>
-          <div className="cap-visual blank-visual" aria-hidden="true" />
-          <div className="cap-info">
-            <span>{capabilities[active][0]} / SERVICE</span>
-            <p>{capabilities[active][2]}</p>
+          <div className="cap-visual">
+            <img
+              src={capabilityImages[active]}
+              alt={`${capabilities[active][1]} machining process`}
+              className="capability-photo"
+            />
+            <div className="capability-photo-caption">
+              <span>{capabilities[active][0]} / SERVICE</span>
+              <p>{capabilities[active][2]}</p>
+            </div>
+            <span className="capability-photo-index">0{active + 1} / 05</span>
           </div>
         </div>
       </div>
@@ -575,54 +590,53 @@ function AxisChat() {
     setOpen(false);
     launcher.current?.focus();
   }
-  const focus = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2";
   return (
-    <div className="fixed right-4 bottom-4 z-[150] flex flex-col items-end gap-3 md:right-7 md:bottom-7">
+    <div className="axis-chat-dock">
       {open && (
         <aside
           id="axis-chat"
           aria-label="Mr. ASPRAZ chat with Aspraz Axis"
           onKeyDown={(event) => { if (event.key === "Escape") close(); }}
-          className="flex w-[min(390px,calc(100vw-32px))] max-h-[calc(100dvh-110px)] flex-col overflow-hidden rounded-2xl border border-slate-300 bg-[#f7f3ea] text-[#07101f] shadow-2xl"
+          className="axis-chat-panel"
         >
-          <div className="flex shrink-0 items-center gap-3 bg-[#05183c] p-4 text-white">
-            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-slate-500">
-              <img src="/aspraz-symbol.svg" alt="" className="h-6 w-8 brightness-0 invert" />
+          <div className="axis-chat-header">
+            <div className="axis-chat-mark">
+              <img src="/aspraz-symbol.svg" alt="" />
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold tracking-widest text-orange-300">MR. ASPRAZ</p>
-              <h2 className="text-lg font-bold">Aspraz Axis</h2>
-              <p className="text-xs text-slate-300">Your machining guide</p>
+            <div className="axis-chat-heading">
+              <p>MR. ASPRAZ / DIGITAL GUIDE</p>
+              <h2>ASPRAZ <em>AXIS.</em></h2>
+              <small>Your machining guide</small>
             </div>
-            <button onClick={close} aria-label="Close chat" className={`min-h-11 min-w-11 rounded-full text-2xl hover:bg-white/10 ${focus}`}>×</button>
+            <button onClick={close} aria-label="Close chat" className="axis-chat-close">×</button>
           </div>
-          <p className="shrink-0 border-b border-slate-300 px-4 py-3 text-xs leading-relaxed text-slate-700">Guided answers · Not live AI or team support. Chat stays in this page session and is not sent to ASPRAZ.</p>
-          <div ref={conversation} role="log" aria-live="polite" aria-label="Conversation" className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
+          <p className="axis-chat-notice">GUIDED ANSWERS <i /> Chat stays in this page session and is not sent to ASPRAZ.</p>
+          <div ref={conversation} role="log" aria-live="polite" aria-label="Conversation" className="axis-chat-conversation">
             {messages.map((message, index) => (
-              <div key={index} className={`max-w-[92%] rounded-xl px-4 py-3 text-sm leading-relaxed ${message.role === "user" ? "ml-auto bg-[#05183c] text-white" : "border border-slate-300 bg-white text-slate-800"}`}>
-                <p className={`mb-1 text-xs font-bold ${message.role === "user" ? "text-slate-300" : "text-slate-600"}`}>{message.role === "user" ? "You" : "Aspraz Axis"}</p>
+              <div key={index} className={`axis-chat-message ${message.role === "user" ? "from-user" : "from-axis"}`}>
+                <p>{message.role === "user" ? "YOU" : "ASPRAZ AXIS"}</p>
                 {message.text}
               </div>
             ))}
           </div>
-          <div className="shrink-0 border-t border-slate-300 px-4 pt-3">
-            <div className="flex flex-wrap gap-2">
+          <div className="axis-chat-compose">
+            <div className="axis-chat-prompts">
               {["Machining services", "Our process", "Location & partners"].map((prompt) => (
-                <button key={prompt} onClick={() => send(prompt === "Location & partners" ? "Who are the partners and where are you based?" : prompt)} className={`min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-xs font-semibold hover:border-blue-600 ${focus}`}>{prompt}</button>
+                <button key={prompt} onClick={() => send(prompt === "Location & partners" ? "Who are the partners and where are you based?" : prompt)}>{prompt}</button>
               ))}
             </div>
-            <a href="#contact" onClick={close} className={`mt-3 flex min-h-11 items-center justify-between rounded-lg bg-[#1c62ff] px-4 text-sm font-bold text-white ${focus}`}>Start an enquiry <span aria-hidden="true">↗</span></a>
-            <form onSubmit={(event) => { event.preventDefault(); send(draft); }} className="my-3 flex gap-2">
-              <input ref={input} aria-label="Message Aspraz Axis" maxLength={600} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Ask Aspraz Axis…" className={`min-h-11 min-w-0 flex-1 rounded-lg border border-slate-400 bg-white px-3 text-sm ${focus}`} />
-              <button disabled={!draft.trim()} type="submit" aria-label="Send message" className={`min-h-11 min-w-11 rounded-lg bg-[#05183c] px-3 text-sm font-bold text-white disabled:bg-slate-600 ${focus}`}>Send</button>
+            <a href="#contact" onClick={close} className="axis-chat-cta">START A PROJECT <span aria-hidden="true">↗</span></a>
+            <form onSubmit={(event) => { event.preventDefault(); send(draft); }} className="axis-chat-form">
+              <input ref={input} aria-label="Message Aspraz Axis" maxLength={600} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Ask Aspraz Axis…" />
+              <button disabled={!draft.trim()} type="submit" aria-label="Send message">SEND ↗</button>
             </form>
           </div>
         </aside>
       )}
-      <button ref={launcher} onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="axis-chat" aria-label={open ? "Minimize Mr. ASPRAZ chat" : "Open Mr. ASPRAZ chat with Aspraz Axis"} className={`flex min-h-14 items-center gap-3 rounded-full border border-white/30 bg-[#05183c] px-5 py-3 text-white shadow-xl transition-colors hover:bg-[#163665] ${focus}`}>
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#ff5b27]"><img src="/aspraz-symbol.svg" alt="" className="h-5 w-6 brightness-0 invert" /></span>
-        <span className="text-left"><span className="block text-sm font-bold">Mr. ASPRAZ</span><span className="block text-xs text-slate-300">Ask Aspraz Axis</span></span>
-        <span aria-hidden="true" className="ml-2 text-lg">{open ? "−" : "+"}</span>
+      <button ref={launcher} onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="axis-chat" aria-label={open ? "Minimize Mr. ASPRAZ chat" : "Open Mr. ASPRAZ chat with Aspraz Axis"} className="axis-chat-launcher">
+        <span className="axis-chat-launcher-mark"><img src="/aspraz-symbol.svg" alt="" /></span>
+        <span className="axis-chat-launcher-copy"><b>MR. ASPRAZ</b><small>ASK ASPRAZ AXIS</small></span>
+        <span className="axis-chat-launcher-toggle" aria-hidden="true">{open ? "−" : "+"}</span>
       </button>
     </div>
   );
