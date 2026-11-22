@@ -1,4 +1,4 @@
-import { FormEvent, PointerEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 const galleryImages = [
   {
@@ -78,42 +78,6 @@ function Brand({ dark = false }: { dark?: boolean }) {
   );
 }
 
-function MagneticButton({
-  href,
-  children,
-  light = false,
-}: {
-  href: string;
-  children: React.ReactNode;
-  light?: boolean;
-}) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  function move(event: PointerEvent<HTMLAnchorElement>) {
-    if (!ref.current || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const box = ref.current.getBoundingClientRect();
-    ref.current.style.setProperty("--mx", `${(event.clientX - box.left - box.width / 2) * 0.16}px`);
-    ref.current.style.setProperty("--my", `${(event.clientY - box.top - box.height / 2) * 0.16}px`);
-  }
-  function reset() {
-    ref.current?.style.setProperty("--mx", "0px");
-    ref.current?.style.setProperty("--my", "0px");
-  }
-  return (
-    <a
-      ref={ref}
-      onPointerMove={move}
-      onPointerLeave={reset}
-      className={`magnetic ${light ? "magnetic-light" : ""}`}
-      href={href}
-    >
-      <span>{children}</span>
-      <i>
-        <ArrowIcon />
-      </i>
-    </a>
-  );
-}
-
 function ProcessMark({ stage }: { stage: number }) {
   return (
     <div className={`process-mark-system mark-stage-${stage}`}>
@@ -154,24 +118,18 @@ function Hero() {
         <span className="outline reveal">PRECISION</span>
         <span className="indent reveal">MOVE.</span>
       </div>
-      <div className="hero-object blank-visual" aria-hidden="true" />
-      <div className="hero-sidecopy">
-        <p>
-          MADE WITH MACHINES.
-          <br />
-          DEFINED BY PRECISION.
-        </p>
-        <small>
-          Precision CNC and VMC machining job work built around engineering requirements, accuracy
-          and execution.
-        </small>
-        <div className="hero-actions">
-          <MagneticButton href="#work" light>
-            EXPLORE OUR WORK
-          </MagneticButton>
-          <a href="#contact" className="text-link">
-            START A PROJECT <ArrowIcon />
-          </a>
+      <div className="hero-object hero-engine-visual" aria-hidden="true">
+        <iframe src="/jet-engine-morph-loop.html" title="Animated jet engine" />
+      </div>
+      <div className="hero-brand-studies" aria-label="Three orange ASPRAZ mark treatments">
+        <div className="hero-brand-study brand-study-stroke">
+          <img src="/aspraz-mark-outline.svg" alt="" />
+        </div>
+        <div className="hero-brand-study brand-study-lines">
+          <img src="/aspraz-mark-lines.svg" alt="" />
+        </div>
+        <div className="hero-brand-study brand-study-depth">
+          <img src="/aspraz-mark-depth.svg" alt="" />
         </div>
       </div>
       <a className="scroll-cue" href="#about">

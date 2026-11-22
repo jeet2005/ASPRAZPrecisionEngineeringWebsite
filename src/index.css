@@ -153,16 +153,14 @@ button {
   font: 700 11px "Manrope";
   letter-spacing: 0.13em;
 }
-.nav-cta svg,
-.text-link svg {
+.nav-cta svg {
   width: 19px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.5;
   transition: transform 0.25s;
 }
-.nav-cta:hover svg,
-.text-link:hover svg {
+.nav-cta:hover svg {
   transform: translateX(5px);
 }
 .menu-toggle,
@@ -225,10 +223,13 @@ button {
 .hero-title {
   position: relative;
   z-index: 5;
-  margin-top: 4vh;
+  width: fit-content;
+  max-width: calc(100% - 12px);
+  padding-right: 12px;
+  margin-top: 3vh;
   display: flex;
   flex-direction: column;
-  font: 800 clamp(102px, 12.8vw, 206px)/0.68 "Barlow Condensed";
+  font: 800 clamp(92px, 10.6vw, 172px)/0.84 "Barlow Condensed";
   letter-spacing: -0.045em;
 }
 .hero-title span {
@@ -238,10 +239,10 @@ button {
 .hero-title .outline {
   color: transparent;
   -webkit-text-stroke: 1.5px rgba(238, 233, 223, 0.86);
-  margin-left: 10vw;
+  margin-left: 0;
 }
 .hero-title .indent {
-  margin-left: 34vw;
+  margin-left: 0;
   color: var(--paper);
 }
 .reveal {
@@ -268,13 +269,25 @@ button {
 .hero-object {
   position: absolute;
   z-index: 4;
-  width: min(43vw, 670px);
+  width: min(45vw, 690px);
   aspect-ratio: 1;
-  left: 36%;
-  top: 16%;
+  right: 3.5%;
+  left: auto;
+  top: 12%;
   transform: translate3d(var(--px), var(--py), 0) perspective(1000px) rotateX(var(--rx))
     rotateY(var(--ry));
   transition: transform 0.12s linear;
+}
+.hero-engine-visual {
+  pointer-events: none;
+  filter: drop-shadow(0 30px 55px rgba(0, 0, 0, 0.38));
+}
+.hero-engine-visual iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
 }
 .assembly {
   width: 100%;
@@ -434,52 +447,27 @@ button {
   inset: 17%;
   transform: rotate(-28deg);
 }
-.hero-sidecopy {
+.hero-brand-studies {
   position: absolute;
-  z-index: 7;
-  right: 4.6vw;
-  top: 37%;
-  width: 23vw;
-  max-width: 330px;
+  z-index: 8;
+  left: 4.6vw;
+  bottom: 56px;
+  width: min(650px, 56vw);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.8vw, 26px);
 }
-.hero-sidecopy > p {
-  font: 700 15px/1.35 "Space Grotesk";
-  letter-spacing: 0.06em;
+.hero-brand-study {
+  min-width: 0;
+  display: grid;
+  place-items: center;
 }
-.hero-sidecopy > small {
+.hero-brand-study img {
   display: block;
-  margin: 22px 0 29px;
-  color: #aab3c2;
-  font-size: 11px;
-  line-height: 1.75;
+  width: clamp(78px, 9vw, 130px);
+  max-width: 100%;
+  height: auto;
 }
-.hero-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 22px;
-}
-.magnetic {
-  --mx: 0px;
-  --my: 0px;
-  height: 57px;
-  padding: 0 7px 0 23px;
-  background: var(--orange);
-  color: white;
-  display: inline-flex;
-  align-items: center;
-  gap: 22px;
-  font: 700 10px "Manrope";
-  letter-spacing: 0.13em;
-  transform: translate(var(--mx), var(--my));
-  transition:
-    transform 0.15s,
-    background 0.25s;
-}
-.magnetic:hover {
-  background: #ff7345;
-}
-.magnetic i,
 .submit-btn i {
   width: 43px;
   height: 43px;
@@ -487,21 +475,11 @@ button {
   display: grid;
   place-items: center;
 }
-.magnetic svg,
 .submit-btn svg {
   width: 18px;
   fill: none;
   stroke: var(--ink);
   stroke-width: 1.5;
-}
-.text-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font: 700 10px "Manrope";
-  letter-spacing: 0.14em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  padding-bottom: 8px;
 }
 .hero-label {
   position: absolute;
@@ -538,15 +516,15 @@ button {
 .scroll-cue {
   position: absolute;
   z-index: 8;
-  left: 4.6vw;
-  bottom: 35px;
+  left: auto;
+  right: 4.6vw;
+  bottom: 34px;
   display: flex;
   align-items: center;
   gap: 15px;
   font: 600 8px "Manrope";
   letter-spacing: 0.2em;
-  transform: rotate(-90deg);
-  transform-origin: left center;
+  transform: none;
 }
 .scroll-cue i {
   width: 34px;
@@ -1799,7 +1777,7 @@ section.in-view h2 {
   pointer-events: none;
 }
 .hero-object {
-  height: min(43vw, 670px);
+  height: auto;
   transform: rotate(-2deg);
 }
 .hero-object .model-frame {
@@ -2085,20 +2063,18 @@ section.in-view h2 {
     padding-top: 125px;
   }
   .hero-title {
-    font-size: clamp(85px, 15vw, 140px);
+    font-size: clamp(82px, 11vw, 132px);
+    line-height: 0.84;
   }
   .hero-object {
-    width: 58vw;
-    left: 30%;
-    top: 25%;
+    width: 56vw;
+    right: 0;
+    left: auto;
+    top: 14%;
   }
-  .hero-sidecopy {
-    top: auto;
-    bottom: 80px;
-    width: 33vw;
-  }
-  .hero-title .indent {
-    margin-left: 25vw;
+  .hero-brand-studies {
+    width: min(700px, 72vw);
+    bottom: 46px;
   }
   .label-a,
   .label-b {
@@ -2160,48 +2136,24 @@ section.in-view h2 {
     font-size: 7px;
   }
   .hero-title {
-    font-size: 25vw;
-    line-height: 0.75;
-    margin-top: 50px;
-  }
-  .hero-title .outline {
-    margin-left: 0;
-  }
-  .hero-title .indent {
-    margin-left: 12vw;
+    font-size: clamp(76px, 19vw, 110px);
+    line-height: 0.84;
+    margin-top: 32px;
   }
   .hero-object {
-    width: 95vw;
-    left: 11%;
-    top: 29%;
+    width: 78vw;
+    right: -5%;
+    left: auto;
+    top: 25%;
   }
-  .hero-sidecopy {
+  .hero-brand-studies {
     left: 20px;
-    right: auto;
-    bottom: 45px;
-    width: 80%;
-    max-width: none;
+    bottom: 42px;
+    width: calc(100% - 40px);
+    gap: 8px;
   }
-  .hero-sidecopy > small {
-    max-width: 310px;
-    margin: 10px 0 18px;
-  }
-  .hero-sidecopy > p {
-    font-size: 12px;
-  }
-  .hero-actions {
-    flex-direction: row;
-    align-items: center;
-  }
-  .magnetic {
-    height: 48px;
-    font-size: 8px;
-    padding-left: 14px;
-    gap: 10px;
-  }
-  .magnetic i {
-    width: 36px;
-    height: 36px;
+  .hero-brand-study img {
+    width: min(88px, 100%);
   }
   .label-c {
     left: auto;
@@ -2505,10 +2457,11 @@ section.in-view h2 {
     margin-top: 295px;
   }
   .hero-object {
-    width: 92vw;
-    height: 54vw;
-    left: 6%;
-    top: 35%;
+    width: 78vw;
+    height: auto;
+    right: -5%;
+    left: auto;
+    top: 25%;
   }
   .model-frame-featured .model-meta small {
     display: none;
