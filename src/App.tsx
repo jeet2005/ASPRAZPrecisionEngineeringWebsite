@@ -114,42 +114,6 @@ function MagneticButton({
   );
 }
 
-function SketchfabModel({
-  id,
-  title,
-  credit,
-  featured = false,
-}: {
-  id: string;
-  title: string;
-  credit: string;
-  featured?: boolean;
-}) {
-  const [active, setActive] = useState(false);
-  return (
-    <div
-      className={`model-frame ${featured ? "model-frame-featured" : ""} ${active ? "is-active" : ""}`}
-    >
-      <iframe
-        title={title}
-        src={`https://sketchfab.com/models/${id}/embed?autostart=1&ui_infos=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&dnt=1`}
-        allow="autoplay; fullscreen; xr-spatial-tracking"
-        loading={featured ? "eager" : "lazy"}
-      />
-      {!active && (
-        <button className="model-activate" onClick={() => setActive(true)}>
-          <span>EXPLORE 3D</span>
-          <i>↗</i>
-        </button>
-      )}
-      <div className="model-meta">
-        <span>{title}</span>
-        <small>{credit} / EXTERNAL 3D STUDY</small>
-      </div>
-    </div>
-  );
-}
-
 function ProcessMark({ stage }: { stage: number }) {
   return (
     <div className={`process-mark-system mark-stage-${stage}`}>
@@ -190,14 +154,7 @@ function Hero() {
         <span className="outline reveal">PRECISION</span>
         <span className="indent reveal">MOVE.</span>
       </div>
-      <div className="hero-object">
-        <SketchfabModel
-          id="d11b572b74bd4d148ac8980294d9a2fa"
-          title="VERTICAL MACHINING CENTER"
-          credit="3D MODEL BY STRATEGICSALE.FOUR"
-          featured
-        />
-      </div>
+      <div className="hero-object blank-visual" aria-hidden="true" />
       <div className="hero-sidecopy">
         <p>
           MADE WITH MACHINES.
@@ -308,13 +265,7 @@ function About() {
           </div>
         </div>
       </div>
-      <div className="about-shape">
-        <SketchfabModel
-          id="b7bb5f7f607f431ba16806da40f42421"
-          title="MACHINED PART / 3D SCAN"
-          credit="GOMEASURE3D · CC BY"
-        />
-      </div>
+      <div className="about-shape blank-visual" aria-hidden="true" />
       <div className="marquee" aria-hidden="true">
         <div>
           REQUIREMENT — PREPARATION — MACHINING — CHECK — DELIVERY — REQUIREMENT — PREPARATION —
@@ -373,7 +324,7 @@ function Capabilities() {
 
 function Playground() {
   return (
-    <section className="playground" aria-label="Interactive mechanical playground">
+    <section className="playground" aria-label="Engineering space">
       <div className="play-grid" />
       <div className="play-head">
         <div className="section-tag light">
@@ -385,24 +336,7 @@ function Playground() {
           <span>SPACE.</span>
         </h2>
       </div>
-      <div className="play-stage">
-        <div className="play-models">
-          <SketchfabModel
-            id="e08b557b9f4543a3bba2faeb8572be72"
-            title="CNC MACHINE SYSTEM"
-            credit="LUTZ WESTERFELD · CC BY"
-          />
-          <SketchfabModel
-            id="0c415c66f6dd44929d7853deca72ace8"
-            title="CNC MACHINED IRON PART"
-            credit="SHINING 3D · CC BY"
-          />
-        </div>
-        <p className="play-disclaimer">
-          Interactive external 3D studies. Shown for visual context only; not ASPRAZ equipment or
-          production work.
-        </p>
-      </div>
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" />
     </section>
   );
 }
@@ -637,6 +571,105 @@ function Contact() {
   );
 }
 
+type ChatMessage = { role: "assistant" | "user"; text: string };
+
+function axisReply(question: string) {
+  const text = question.toLowerCase();
+  if (/partner|founder|owner|arth|rishi|bhalala/.test(text))
+    return "ASPRAZ’s partners are Arth Bhalala, Hit Bhalala and Rishi Bhalala. The company is based in Rajkot, Gujarat.";
+  if (/where|location|address|rajkot|gujarat/.test(text))
+    return "ASPRAZ Engineering LLP is based in Rajkot, Gujarat, India. A full street address has not been provided on this website.";
+  if (/quote|price|cost|project|drawing|enquiry|contact|order/.test(text))
+    return "To discuss a machining requirement, prepare your drawing, material, quantity, applicable specifications and target delivery date. Use “Start an enquiry” below to open the website’s enquiry form. I cannot issue quotations or submit requests to the team.";
+  if (/tolerance|certif|capacity|machine spec|delivery|lead time|material/.test(text))
+    return "Materials, tolerances, machine specifications, capacity and lead times need confirmation from ASPRAZ for your specific component. I won’t guess. Include your requirements in the enquiry form for discussion.";
+  if (/process|quality|check/.test(text))
+    return "The process follows five stages: requirement review, preparation, CNC/VMC machining, quality check against applicable specifications, and delivery of the completed machining work.";
+  if (/service|cnc|vmc|mill|drill|tap|capabilit|job work/.test(text))
+    return "ASPRAZ focuses on CNC and VMC machining job work, including precision milling, drilling & tapping and customer-specific machining. It supports customer component requirements rather than selling a catalogue of finished products.";
+  if (/hello|^hi\\b|hey|help/.test(text))
+    return "Hello! I’m Aspraz Axis, the guided assistant inside Mr. ASPRAZ. Ask about machining services, the process, the partners or how to prepare a project enquiry.";
+  return "I can help with ASPRAZ’s services, process, location, partners and enquiry preparation. I’m a guided website assistant with preset answers, not live AI or a team member. For component-specific advice, start an enquiry below.";
+}
+
+function AxisChat() {
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState("");
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { role: "assistant", text: "Hello, I’m Aspraz Axis. Let’s find the next step for your machining requirement. What would you like to know?" },
+  ]);
+  const launcher = useRef<HTMLButtonElement>(null);
+  const input = useRef<HTMLInputElement>(null);
+  const conversation = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (open) input.current?.focus();
+  }, [open]);
+  useEffect(() => {
+    if (conversation.current) conversation.current.scrollTop = conversation.current.scrollHeight;
+  }, [messages, open]);
+  function send(text: string) {
+    const value = text.trim().slice(0, 600);
+    if (!value) return;
+    setMessages((previous) => [...previous, { role: "user", text: value }, { role: "assistant", text: axisReply(value) }]);
+    setDraft("");
+  }
+  function close() {
+    setOpen(false);
+    launcher.current?.focus();
+  }
+  const focus = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2";
+  return (
+    <div className="fixed right-4 bottom-4 z-[150] flex flex-col items-end gap-3 md:right-7 md:bottom-7">
+      {open && (
+        <aside
+          id="axis-chat"
+          aria-label="Mr. ASPRAZ chat with Aspraz Axis"
+          onKeyDown={(event) => { if (event.key === "Escape") close(); }}
+          className="flex w-[min(390px,calc(100vw-32px))] max-h-[calc(100dvh-110px)] flex-col overflow-hidden rounded-2xl border border-slate-300 bg-[#f7f3ea] text-[#07101f] shadow-2xl"
+        >
+          <div className="flex shrink-0 items-center gap-3 bg-[#05183c] p-4 text-white">
+            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-slate-500">
+              <img src="/aspraz-symbol.svg" alt="" className="h-6 w-8 brightness-0 invert" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold tracking-widest text-orange-300">MR. ASPRAZ</p>
+              <h2 className="text-lg font-bold">Aspraz Axis</h2>
+              <p className="text-xs text-slate-300">Your machining guide</p>
+            </div>
+            <button onClick={close} aria-label="Close chat" className={`min-h-11 min-w-11 rounded-full text-2xl hover:bg-white/10 ${focus}`}>×</button>
+          </div>
+          <p className="shrink-0 border-b border-slate-300 px-4 py-3 text-xs leading-relaxed text-slate-700">Guided answers · Not live AI or team support. Chat stays in this page session and is not sent to ASPRAZ.</p>
+          <div ref={conversation} role="log" aria-live="polite" aria-label="Conversation" className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
+            {messages.map((message, index) => (
+              <div key={index} className={`max-w-[92%] rounded-xl px-4 py-3 text-sm leading-relaxed ${message.role === "user" ? "ml-auto bg-[#05183c] text-white" : "border border-slate-300 bg-white text-slate-800"}`}>
+                <p className={`mb-1 text-xs font-bold ${message.role === "user" ? "text-slate-300" : "text-slate-600"}`}>{message.role === "user" ? "You" : "Aspraz Axis"}</p>
+                {message.text}
+              </div>
+            ))}
+          </div>
+          <div className="shrink-0 border-t border-slate-300 px-4 pt-3">
+            <div className="flex flex-wrap gap-2">
+              {["Machining services", "Our process", "Location & partners"].map((prompt) => (
+                <button key={prompt} onClick={() => send(prompt === "Location & partners" ? "Who are the partners and where are you based?" : prompt)} className={`min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-xs font-semibold hover:border-blue-600 ${focus}`}>{prompt}</button>
+              ))}
+            </div>
+            <a href="#contact" onClick={close} className={`mt-3 flex min-h-11 items-center justify-between rounded-lg bg-[#1c62ff] px-4 text-sm font-bold text-white ${focus}`}>Start an enquiry <span aria-hidden="true">↗</span></a>
+            <form onSubmit={(event) => { event.preventDefault(); send(draft); }} className="my-3 flex gap-2">
+              <input ref={input} aria-label="Message Aspraz Axis" maxLength={600} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Ask Aspraz Axis…" className={`min-h-11 min-w-0 flex-1 rounded-lg border border-slate-400 bg-white px-3 text-sm ${focus}`} />
+              <button disabled={!draft.trim()} type="submit" aria-label="Send message" className={`min-h-11 min-w-11 rounded-lg bg-[#05183c] px-3 text-sm font-bold text-white disabled:bg-slate-600 ${focus}`}>Send</button>
+            </form>
+          </div>
+        </aside>
+      )}
+      <button ref={launcher} onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="axis-chat" aria-label={open ? "Minimize Mr. ASPRAZ chat" : "Open Mr. ASPRAZ chat with Aspraz Axis"} className={`flex min-h-14 items-center gap-3 rounded-full border border-white/30 bg-[#05183c] px-5 py-3 text-white shadow-xl transition-colors hover:bg-[#163665] ${focus}`}>
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#ff5b27]"><img src="/aspraz-symbol.svg" alt="" className="h-5 w-6 brightness-0 invert" /></span>
+        <span className="text-left"><span className="block text-sm font-bold">Mr. ASPRAZ</span><span className="block text-xs text-slate-300">Ask Aspraz Axis</span></span>
+        <span aria-hidden="true" className="ml-2 text-lg">{open ? "−" : "+"}</span>
+      </button>
+    </div>
+  );
+}
+
 export default function App() {
   useEffect(() => {
     const onScroll = () => {
@@ -673,6 +706,7 @@ export default function App() {
         <Why />
         <Contact />
       </main>
+      <AxisChat />
     </>
   );
 }
