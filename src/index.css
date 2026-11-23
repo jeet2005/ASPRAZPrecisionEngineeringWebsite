@@ -2847,3 +2847,157 @@ section.in-view h2 {
   .axis-chat-panel { border-radius: 18px; }
   .axis-chat-launcher { min-height: 54px; }
 }
+
+/* Mobile layout refinements */
+@media (max-width: 680px) {
+  .nav { padding: 0 18px; }
+  .mobile-menu {
+    padding: max(94px, calc(70px + env(safe-area-inset-top))) 22px max(28px, env(safe-area-inset-bottom));
+    background: rgba(5, 24, 60, .98);
+    color: var(--paper);
+  }
+  .mobile-menu > span { color: var(--orange); }
+  .mobile-menu > a {
+    gap: 14px;
+    padding: 10px 0;
+    border-color: rgba(238, 233, 223, .22);
+    font-size: clamp(42px, 12vw, 66px);
+  }
+  .mobile-menu > a small { color: var(--orange); }
+  .mobile-menu > p { max-width: 240px; line-height: 1.7; }
+
+  .hero {
+    height: max(740px, 100svh);
+    min-height: 740px;
+    padding: max(104px, calc(86px + env(safe-area-inset-top))) 18px 28px;
+  }
+  .hero-title {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+    margin-top: 30px;
+    font-size: clamp(64px, 18vw, 100px);
+    line-height: .87;
+  }
+  .hero-title span { max-width: 100%; }
+  .hero-object {
+    width: 92vw;
+    right: -20vw;
+    top: 26%;
+    opacity: .88;
+  }
+  .hero-brand-studies {
+    left: 18px;
+    bottom: max(26px, calc(16px + env(safe-area-inset-bottom)));
+    width: calc(100% - 36px);
+    gap: 10px;
+  }
+  .hero-brand-study { min-width: 0; }
+  .hero-brand-study img { width: min(82px, 100%); }
+
+  .about,
+  .capabilities,
+  .process,
+  .gallery,
+  .why,
+  .contact { padding-left: 18px; padding-right: 18px; }
+  .about { min-height: 850px; padding-top: 68px; padding-bottom: 130px; }
+  .about-heading { margin-top: 48px; }
+  .about h2,
+  .process h2,
+  .why h2 { font-size: clamp(62px, 18vw, 94px); }
+  .blue-disc { width: 86px; right: -5px; top: 32%; box-shadow: 7px 9px 0 #d5d0c7; }
+  .blue-disc span { font-size: 6px; }
+  .about-copy { width: 100%; margin: 235px 0 0 auto; }
+  .about-copy p { font-size: 15px; line-height: 1.55; }
+  .company-facts div { grid-template-columns: 72px minmax(0, 1fr); gap: 8px; }
+  .company-facts b { overflow-wrap: anywhere; }
+  .about-shape { width: 52vw; height: 170px; left: -8%; bottom: 112px; opacity: .68; }
+  .marquee { left: -18px; width: calc(100% + 36px); }
+
+  .capabilities { padding-top: 68px; padding-bottom: 68px; }
+  .section-intro h2,
+  .play-head h2,
+  .gallery-head h2,
+  .contact-top h2 { margin-top: 34px; font-size: clamp(56px, 17vw, 88px); }
+  .section-intro p,
+  .gallery-head p { width: 88%; margin-top: 20px; }
+  .cap-layout { margin-top: 38px; }
+  .cap-list button { min-height: 66px; grid-template-columns: 30px minmax(0, 1fr) 26px; padding-right: 2px; }
+  .cap-list button:hover,
+  .cap-list button.active { padding-left: 12px; }
+  .cap-list button span { font-size: clamp(22px, 7vw, 28px); }
+  .cap-list button i { width: 26px; height: 26px; }
+  .cap-stage { height: clamp(330px, 100vw, 420px); }
+  .capability-photo-caption { min-height: 145px; padding: 54px 18px 18px; }
+  .capability-photo-caption p { font-size: 12px; line-height: 1.5; }
+  .capability-photo-index { top: 14px; right: 14px; }
+
+  .playground { height: 690px; padding: 66px 18px; }
+  .play-head h2 { margin-top: 34px; }
+  .process { padding-top: 68px; padding-bottom: 68px; }
+  .process-title { margin-top: 34px; }
+  .process-title p { width: 88%; margin-top: 24px; }
+  .process-body { margin-top: 36px; }
+  .process-object { height: 290px; }
+  .process-counter { left: 18px; bottom: 16px; font-size: 38px; }
+  .process-list button { min-height: 82px; padding: 16px 8px; grid-template-columns: 38px minmax(0, 1fr); }
+  .process-list button span { font-size: 25px; }
+  .process-list button.active { padding-left: 16px; }
+  .process-list button.active p { height: auto; max-height: 7em; line-height: 1.5; }
+
+  .gallery { min-height: 0; padding-top: 68px; padding-bottom: 72px; }
+  .gallery-grid { margin-top: 42px; gap: 48px; }
+  .image-wrap { height: clamp(245px, 78vw, 340px); }
+  .item-2 { width: 88%; }
+  .item-2 .image-wrap,
+  .item-3 .image-wrap { height: clamp(230px, 70vw, 300px); }
+  .item-3 { width: 92%; }
+  .gallery-item figcaption { gap: 7px; }
+  .gallery-item figcaption b { font-size: 8px; }
+  .gallery-item figcaption small { font-size: 7px; }
+  .gallery-orb { width: 108px; margin-right: 12px; }
+  .gallery-orb span { font-size: 8px; }
+
+  .why { padding-top: 68px; padding-bottom: 72px; }
+  .why-sticky > p { width: 88%; margin-top: 24px; }
+  .strengths { padding-top: 48px; }
+  .strength { height: 88px; grid-template-columns: 34px minmax(0, 1fr) 34px; }
+  .strength h3 { font-size: clamp(21px, 6.5vw, 27px); }
+  .strength > span { width: 30px; height: 30px; }
+
+  .contact { padding-top: 68px; }
+  .contact-top > p { width: 88%; margin: 24px 0 0 auto; }
+  .contact-direct { max-width: 100%; font-size: 8px; }
+  .contact-visual { width: 190px; height: 190px; top: 210px; right: -105px; opacity: .28; }
+  .contact form { width: 100%; margin: 58px 0 72px; padding: 26px 18px; box-shadow: -8px 8px 0 var(--orange); }
+  .contact label { margin-bottom: 20px; }
+  .contact input,
+  .contact textarea,
+  .contact select { min-height: 44px; font-size: 16px; }
+  .contact textarea { min-height: 100px; }
+  .submit-btn { width: 100%; justify-content: space-between; }
+  footer { grid-template-columns: 1fr 1fr; gap: 28px 16px; padding-top: 38px; }
+  footer > div a { font-size: 9px; }
+  footer > p { flex-direction: column; gap: 8px; font-size: 7px; line-height: 1.6; }
+
+  .axis-chat-dock { right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); }
+  .axis-chat-panel { width: min(430px, calc(100vw - 20px)); max-height: calc(100dvh - 84px - env(safe-area-inset-top)); }
+  .axis-chat-conversation { min-height: 0; }
+  .axis-chat-message { max-width: 96%; font-size: 12px; }
+  .axis-chat-compose { padding: 10px 12px 12px; }
+  .axis-chat-prompts { gap: 5px; }
+  .axis-chat-prompts button { font-size: 9px; }
+}
+
+@media (max-width: 390px) {
+  .hero-kicker { padding-left: 36px; letter-spacing: .14em; }
+  .hero-kicker:before { width: 24px; }
+  .hero-title { font-size: 18vw; }
+  .hero-brand-study img { width: min(72px, 100%); }
+  .micro-spec { gap: 8px; font-size: 7px; }
+  .company-facts b { font-size: 9px; }
+  .axis-chat-heading h2 { font-size: 20px; }
+  .axis-chat-notice { font-size: 9px; }
+  .axis-chat-prompts button { padding: 6px 8px; }
+}
