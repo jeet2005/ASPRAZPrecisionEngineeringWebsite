@@ -2881,10 +2881,10 @@ section.in-view h2 {
   }
   .hero-title span { max-width: 100%; }
   .hero-object {
-    width: 92vw;
-    right: -20vw;
-    top: 26%;
-    opacity: .88;
+    width: 80vw;
+    right: -18vw;
+    top: 43%;
+    opacity: .8;
   }
   .hero-brand-studies {
     left: 18px;
@@ -2933,7 +2933,7 @@ section.in-view h2 {
   .capability-photo-caption p { font-size: 12px; line-height: 1.5; }
   .capability-photo-index { top: 14px; right: 14px; }
 
-  .playground { height: 690px; padding: 66px 18px; }
+  .playground { height: 690px; padding: 66px 18px; touch-action: pan-y; }
   .play-head h2 { margin-top: 34px; }
   .process { padding-top: 68px; padding-bottom: 68px; }
   .process-title { margin-top: 34px; }

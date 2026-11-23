@@ -144,3 +144,6 @@
 *.stl                filter=lfs diff=lfs merge=lfs -text
 *.nc                 filter=lfs diff=lfs merge=lfs -text
 *.mat                filter=lfs diff=lfs merge=lfs -text
+
+# Serve capability photos directly from the repository for the Vercel static build.
+public/capability-*.jpg -filter -diff -merge -text
