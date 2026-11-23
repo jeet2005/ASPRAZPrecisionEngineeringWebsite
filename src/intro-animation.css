@@ -1,14 +1,10 @@
 
-html,body{margin:0;height:100%;background:#07101f}
-#__unused_replay{position:fixed;left:20px;bottom:20px;background:none;border:1px solid rgba(238,233,223,.35);color:#eee9df;padding:8px 16px;font:600 11px Manrope,sans-serif;letter-spacing:.14em;cursor:pointer;border-radius:2px;display:none}
-#__unused_replay:hover{background:#eee9df;color:#07101f}
-#__unused_replay:focus-visible{outline:2px solid #eee9df;outline-offset:3px}
 /* ===== INTRO ===== */
 #aspraz-intro{position:fixed;inset:0;z-index:9999;background-color:#eee9df;
   background-image:linear-gradient(rgba(5,24,60,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(5,24,60,.06) 1px,transparent 1px),linear-gradient(rgba(5,24,60,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(5,24,60,.12) 1px,transparent 1px);
   background-size:20px 20px,20px 20px,100px 100px,100px 100px;
   display:grid;place-items:center;clip-path:inset(0);transition:clip-path .95s cubic-bezier(.77,0,.18,1)}
-#aspraz-intro.done{clip-path:inset(50% 0 50% 0)}
+#aspraz-intro.done{clip-path:inset(0 0 100% 0)}
 #aspraz-intro .sheet{width:100%;height:100%;display:block}
 #aspraz-intro .t{font-family:Manrope,system-ui,sans-serif}
 #aspraz-intro .bar{position:absolute;top:0;left:0;height:3px;width:0;background:#ff5b27;z-index:2}
@@ -18,11 +14,10 @@ html,body{margin:0;height:100%;background:#07101f}
 #aspraz-intro .xy{display:block;margin-top:6px;font:500 12px "Space Grotesk",sans-serif;letter-spacing:.06em;font-variant-numeric:tabular-nums;opacity:.7}
 #aspraz-intro .pct{font:700 clamp(48px,8vw,88px)/.85 "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums}
 #aspraz-intro .pct small{font-size:.38em;margin-left:2px;opacity:.7}
-#aspraz-intro .skip{position:absolute;top:calc(48px + env(safe-area-inset-top,0px));right:max(52px,env(safe-area-inset-right,0px));z-index:2;background:none;
-  border:1px solid rgba(5,24,60,.4);color:#05183C;padding:6px 14px;font:600 11px Manrope,sans-serif;letter-spacing:.14em;cursor:pointer;border-radius:2px}
-#aspraz-intro .skip:hover{background:#05183C;color:#eee9df}
-#aspraz-intro .skip:focus-visible{outline:2px solid #05183C;outline-offset:3px}
 @media (max-width:700px){#aspraz-intro .meta{bottom:calc(30px + env(safe-area-inset-bottom,0px))}#aspraz-intro .xy{display:none}}
+
+
+
 
 
 

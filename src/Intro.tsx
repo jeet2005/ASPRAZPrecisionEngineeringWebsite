@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { mountIntro } from "./intro-animation";
 import "./intro-animation.css";
 
-const INTRO_KEY = "aspraz-intro-seen";
+const INTRO_KEY = "aspraz-intro-seen-v2";
 
 export default function Intro() {
   useEffect(() => {
@@ -21,3 +21,4 @@ export default function Intro() {
 
   return null;
 }
+

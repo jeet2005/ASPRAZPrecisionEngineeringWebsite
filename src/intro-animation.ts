@@ -15,11 +15,10 @@ export function mountIntro(root, onDone) {
   let layers = '';
   for (let k = N; k >= 1; k--) layers += `<use href="#lg" data-k="${k}" fill="${k > N - 3 ? '#0a2250' : '#020b1f'}" opacity="0"/>`;
 
-  root.setAttribute('role', 'status'); root.setAttribute('aria-label', 'Loading Aspraz');
+  root.setAttribute('role', 'status'); root.setAttribute('aria-label', 'Loading ASPRÄZ');
   root.innerHTML = `
   <i class="bar"></i>
-  <button class="skip" type="button">Skip</button>
-  <svg class="sheet" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<svg class="sheet" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     <defs>
       <path id="lg" d="${PATH}"/>
       <linearGradient id="face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a4797"/><stop offset=".4" stop-color="#05183C"/><stop offset="1" stop-color="#030f26"/></linearGradient>
@@ -43,7 +42,7 @@ export function mountIntro(root, onDone) {
       </g>
       <g class="tb fade1" opacity="0" stroke-width="1">
         <rect x="846" y="604" width="316" height="58"/><path d="M846 628H1162M1010 628V662"/>
-        <g fill="#05183C" stroke="none" class="t"><text x="858" y="621" font-size="12" font-weight="700" letter-spacing="1.4">ASPRAZ PRECISION ENGINEERING</text>
+        <g fill="#05183C" stroke="none" class="t"><text x="858" y="621" font-size="12" font-weight="700" letter-spacing="1.4">ASPRÄZ PRECISION ENGINEERING</text>
         <text x="858" y="650" font-size="11">CNC and VMC job work</text><text x="1022" y="641" font-size="10">Dwg ASP-001</text><text x="1022" y="655" font-size="10">Scale 1:2   Unit mm</text></g>
       </g>
       <g transform="translate(${OX} ${OY})">
@@ -58,7 +57,7 @@ export function mountIntro(root, onDone) {
       </g>
       <g class="tool" opacity="0" stroke="#ff5b27"><circle r="13" fill="#ff5b27" fill-opacity=".18" stroke="none"/><circle r="4.5" stroke-width="1.6"/><path d="M-16 0H-7M7 0H16M0-16V-7M0 7V16" stroke-width="1.2"/></g>
       <g class="wm" opacity="0" fill="#05183C" stroke="none">
-        <text x="600" y="640" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="600" font-size="34" letter-spacing="11">ASPRAZ</text>
+        <text x="600" y="640" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-weight="600" font-size="34" letter-spacing="11">ASPRÄZ</text>
         <text x="600" y="664" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="600" font-size="9" letter-spacing="4.6">PRECISION ENGINEERING</text></g>
     </g>
   </svg>
@@ -116,8 +115,9 @@ export function mountIntro(root, onDone) {
     draw(reduce ? t : .1 * t + .9 * eio(t));
     t < 1 ? raf = requestAnimationFrame(tick) : finish();
   }
-  $('.skip').addEventListener('click', finish);
   raf = requestAnimationFrame(tick);
   return () => { cancelAnimationFrame(raf); timers.forEach(clearTimeout); document.body.style.overflow = ''; };
 }
+
+
 
