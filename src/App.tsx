@@ -280,7 +280,11 @@ function Capabilities() {
           <div className="cap-visual">
             <img
               src={capabilityImages[active]}
-              alt={`${capabilities[active][1]} machining process`}
+              alt={
+                active === 3
+                  ? "Drill press working on a metal piece secured in a machine vise"
+                  : `${capabilities[active][1]} machining process`
+              }
               className="capability-photo"
             />
             <div className="capability-photo-caption">
